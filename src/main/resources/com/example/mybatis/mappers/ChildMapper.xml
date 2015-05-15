@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatis.mappers.ChildMapper">
+	<select id="getAll" resultType="Child">
+		SELECT * FROM child
+	</select>
+	
+	<select id="findById" parameterType="int" resultType="Child">
+		SELECT * FROM child where id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="Child" useGeneratedKeys="true" keyColumn="id">
+		INSERT INTO child (parent_id, name) VALUES ( #{parent_id}, #{name} )
+		
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() as id;
+		</selectKey>
+	</insert>
+</mapper>
